@@ -18,6 +18,7 @@ class Node:
 class LinkedList:
     def __init__(self) -> None:
         self.head = None
+        self.preNode = None
 
     def print_list(self):
         temp = self.head
@@ -35,16 +36,54 @@ class LinkedList:
                 lastNode = lastNode.next
         lastNode.next = new_node # assigning the new node to last next
 
+    def unshipt(self, data):
+        pass
+
+    def insert_at(self, data, index):
+        pass
+
     def delete_value(self, data):
-        preNode = self.head
-        nextNode = self.head
         currentNode = self.head
+        isHead = True
+        self.preNode = None
         while(currentNode):
             if(currentNode.data == data):
-                # delete the node and update the last preNode
-                pass
+                if(isHead):
+                    self.head = currentNode.next
+                    del currentNode
+                    isHead = False
+                    break
+                else:
+                    self.preNode.next = currentNode.next
+                    del currentNode
+                    break
             else:
-                pass
+                self.preNode = currentNode
+                currentNode = currentNode.next
+            isHead = False
+
+        def delete_index(self, data):
+            currentNode = self.head
+            # isHead = True
+            # self.preNode = None
+            # while(currentNode):
+            #     if(currentNode.data == data):
+            #         if(isHead):
+            #             self.head = currentNode.next
+            #             del currentNode
+            #             isHead = False
+            #             break
+            #         else:
+            #             self.preNode.next = currentNode.next
+            #             del currentNode
+            #             break
+            #     else:
+            #         self.preNode = currentNode
+            #         currentNode = currentNode.next
+            #     isHead = False
+                
+
+    
                 
 
 
@@ -68,6 +107,10 @@ if __name__=='__main__':
     llist.push(5)
     # added data 
     print('item added')
+    llist.print_list()
+
+    print('after delete')
+    llist.delete_value(1)
     llist.print_list()
 
 
