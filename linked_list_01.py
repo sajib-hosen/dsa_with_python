@@ -1,8 +1,7 @@
 
-
 # date: 06.12.2023
-# name: sajib hosen - email: sajib.201h@gamil.com
-# ref: https://www.geeksforgeeks.org/python-data-structures-and-algorithms/
+# name: sajib hosen
+# email: sajib.201h@gamil.com
 
 # LINKED_LIST 
 # A linked list is a "linear data" structure, in which the elements are not stored at contiguous memory locations. The elements in a linked list are linked using pointers as shown in the below image:
@@ -22,6 +21,7 @@ class LinkedList:
         self.head = None
         self.preNode = None
 
+    # print out the list 
     def print_list(self):
         temp = self.head
         text_list = ''
@@ -30,6 +30,30 @@ class LinkedList:
             temp = temp.next
         print(text_list, "_")
 
+    # return the length of the list 
+    def length(self):
+        index_count = 0
+        currentNode = self.head
+        while(currentNode):
+            index_count += 1
+            if(not currentNode.next):
+                break
+            else:
+                currentNode = currentNode.next
+        return index_count
+    
+    # if value exist return the index
+    def is_exist(self, data):
+        index_count = 0
+        currentNode = self.head
+        while(currentNode):
+            if(currentNode.data == data):
+                return index_count
+            currentNode = currentNode.next
+            index_count += 1
+        return None
+
+    # insert a value at the end of list
     def push(self, data):
         lastNode = self.head
         new_node = Node(data)
@@ -40,12 +64,36 @@ class LinkedList:
                 lastNode = lastNode.next
         lastNode.next = new_node # assigning the new node to last next
 
+    # insert a value at beginning of the list
     def unshipt(self, data):
-        pass
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
 
-    def insert_at(self, data, index):
-        pass
+    # insert a value at a specific position
+    def insert_at(self, data, index=None):
+        self.preNode = None
+        current_index = 0
+        currentNode = self.head
+        while(currentNode):
+            if(data and not index):
+                self.push(data)
+                break
+            else:
+                if(current_index == index):
+                    if(index == 0):
+                        self.unshipt(data)
+                    else:
+                        new_node = Node(data)
+                        new_node.next = currentNode
+                        self.preNode.next = new_node
+                    break
+                else:
+                    self.preNode = currentNode
+                    currentNode = currentNode.next
+                    current_index += 1
 
+    # delete a value but the value
     def delete_value(self, data):
         currentNode = self.head
         isHead = True
@@ -64,6 +112,7 @@ class LinkedList:
                 currentNode = currentNode.next
             isHead = False
 
+    # delete a value by index
     def delete_index(self, index):
         self.preNode = None
         currentNode = self.head
@@ -76,11 +125,13 @@ class LinkedList:
                     self.preNode.next = currentNode.next
                 del currentNode
                 break
+            self.preNode = currentNode
             currentNode = currentNode.next
-            currentNode =+ 1
+            currentIndex += 1
 
-
-
+    # reverse the list
+    def reverse_list(self):
+        pass
 
 
 if __name__=='__main__':
@@ -98,11 +149,24 @@ if __name__=='__main__':
     llist.push(5)
     llist.push(6)
 
-    # added data 
     print('item added')
     llist.print_list()
 
     print('after delete')
     llist.delete_value(6)
+    llist.delete_index(4)
+
+    print('after unshift')
+    llist.unshipt(0)
     llist.print_list()
 
+    # print('length >>', llist.length())
+    
+    llist.insert_at(12, 2)
+    print('length >>', llist.length())
+    llist.print_list()
+
+    print('is exist at', llist.is_exist(3))
+
+
+# thanks for helping out me : https://www.geeksforgeeks.org/python-data-structures-and-algorithms/
