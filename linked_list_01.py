@@ -20,6 +20,7 @@ class LinkedList:
     def __init__(self) -> None:
         self.head = None
         self.preNode = None
+        self.nextNode = None
 
     # print out the list 
     def print_list(self):
@@ -131,11 +132,17 @@ class LinkedList:
 
     # reverse the list
     def reverse_list(self):
-        pass
+       self.preNode = None
+       self.nextNode = None
+       while(self.head.next):
+           self.nextNode = self.head.next
+           self.head.next = self.preNode
+           self.preNode = self.head
+           self.head = self.nextNode
+
 
 
 if __name__=='__main__':
-
     llist = LinkedList()  #defining and empty location in memory
     llist.head = Node(1) #defining individual node and assigning it to linked_list head
     second = Node(2) #defining individual node
@@ -159,14 +166,16 @@ if __name__=='__main__':
     print('after unshift')
     llist.unshipt(0)
     llist.print_list()
-
-    # print('length >>', llist.length())
     
     llist.insert_at(12, 2)
     print('length >>', llist.length())
     llist.print_list()
 
     print('is exist at', llist.is_exist(3))
+
+    print("after reverse")
+    llist.reverse_list()
+    llist.print_list()
 
 
 # thanks for helping out me : https://www.geeksforgeeks.org/python-data-structures-and-algorithms/
