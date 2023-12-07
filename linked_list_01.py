@@ -20,16 +20,14 @@ class LinkedList:
     def __init__(self) -> None:
         self.head = None
         self.preNode = None
-        self.nextNode = None
 
     # print out the list 
     def print_list(self):
         temp = self.head
-        text_list = ''
         while (temp):
-            text_list = text_list + f' {temp.data}'
+            print(temp.data, end=" ")
             temp = temp.next
-        print(text_list, "_")
+        print("_")
 
     # return the length of the list 
     def length(self):
@@ -130,15 +128,17 @@ class LinkedList:
             currentNode = currentNode.next
             currentIndex += 1
 
-    # reverse the list
+    # reverse the list ref: https://www.youtube.com/watch?v=TSDl7sRxWdU
     def reverse_list(self):
-       self.preNode = None
-       self.nextNode = None
-       while(self.head.next):
-           self.nextNode = self.head.next
-           self.head.next = self.preNode
-           self.preNode = self.head
-           self.head = self.nextNode
+        prev = None
+        currentNode = self.head
+        while(currentNode is not None):
+            next = currentNode.next #helding the current next
+            currentNode.next = prev #changing the current next
+            prev = currentNode #taking the previous state ahead
+            currentNode = next # taking the current satae ahead
+        self.head = prev
+
 
 
 
