@@ -177,5 +177,5 @@ if __name__=='__main__':
     llist.reverse_list()
     llist.print_list()
 
-
+# https://phitron.io/PH451/video/PH451-17-1-recap-of-linear-linked-list 
 # thanks for helping out me : https://www.geeksforgeeks.org/python-data-structures-and-algorithms/
