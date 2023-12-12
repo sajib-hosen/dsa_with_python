@@ -33,6 +33,7 @@ class DublyLinkedList:
     def __init__(self) -> None:
         self.head = None
         self.tail = None
+        self.previous_node = None
 
     #print the list
     def printF(self):
@@ -46,13 +47,16 @@ class DublyLinkedList:
     def push(self, data):
         new_node = Node(data)
         last_node = self.head
-        while(last_node):
-            if(not last_node.next):
-                break
-            else:
-                last_node = last_node.next
-        last_node.next = new_node
-        new_node.prev = last_node
+        if(not self.head):
+            self.head = new_node
+        else:
+            while(last_node):
+                if(not last_node.next):
+                    break
+                else:
+                    last_node = last_node.next
+            last_node.next = new_node
+            new_node.prev = last_node
 
     #push at the start of list
     def unshift(self, data):
@@ -75,25 +79,46 @@ class DublyLinkedList:
     #delete the last item of the list
     def pop(self):
         second_last = self.head
-        while(second_last):
-            if(not second_last.next.next):
-                del second_last.next
-                second_last.next = None
-                break
-            else:
-                second_last = second_last.next
+        value = None
+        if(not self.head.next):
+            value = second_last.data
+            del second_last
+            self.head = None
+        else:
+            while(second_last):
+                if(not second_last.next.next):
+                    value = second_last.next.data
+                    del second_last.next
+                    second_last.next = None
+                    break
+                else:
+                    second_last = second_last.next
+        return value
     
     #delete by index number
-    def delete_at(self, index):
+    def delete_at(self, index:int):
         current_index = 0
         current_node = self.head
-        while(current_node):
-            if(current_index == index):
-                print("Delete the node")
-                break
-            else:
-                current_node = current_node.next
-                current_index += 1
+        self.previous_node = None
+        if(index == 0):
+            self.head = current_node.next
+            del current_node
+        else:
+            while(current_node):
+                if(current_index == index):
+                    next_node = None
+                    if(current_node.next):
+                        next_node = current_node.next
+                        next_node.prev = self.previous_node
+                    else:
+                        self.previous_node.next = next_node
+                        del current_node
+                    break
+                else:
+                    self.previous_node = current_node
+                    current_node = current_node.next
+                    current_index += 1
+        self.previous_node = None
 
     #return the length of list
     def length(self):
@@ -112,21 +137,30 @@ class DublyLinkedList:
 
 if __name__=='__main__':
     Dlist = DublyLinkedList()  #defining and empty location in memory
-    Dlist.head = Node(1) #defining individual node and assigning it to linked_list head
+    # Dlist.head = Node(1) #defining individual node and assigning it to linked_list head
+    # print("pop return  >>", Dlist.pop())
 
+    Dlist.push(1)
+    print("pop return >>", Dlist.pop())
     Dlist.push(2)
-
-    Dlist.push(3)
     Dlist.push(4)
-
-    Dlist.printF()
-
-    Dlist.pop()
+    Dlist.push(3)
+    print("pop return >>", Dlist.pop())
     Dlist.push(5)
-    Dlist.unshift(-2)
+
+    print('before delete')
     Dlist.printF()
-    print("len >>", Dlist.length())
-    print("at >>", Dlist.get_by_index(0))
+
+    Dlist.delete_at(0)
+    print('after delete')
+    Dlist.printF()
+
+    # Dlist.pop()
+    # Dlist.push(5)
+    # Dlist.unshift(-2)
+    # Dlist.printF()
+    # print("len >>", Dlist.length())
+    # print("at >>", Dlist.get_by_index(0))
 
 
    
